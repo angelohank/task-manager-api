@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       ds_username: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(64),
         allowNull: false,
       },
       ds_password: {

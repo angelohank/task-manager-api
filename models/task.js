@@ -33,6 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       dh_created: {
         type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: DataTypes.NOW,
       },
       dh_limit: {
         type: DataTypes.DATE,

@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
       dh_create: {
         type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: DataTypes.NOW,
       },
     },
     {

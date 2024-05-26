@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -31,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
       },
       ds_username: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(64),
         allowNull: false,
       },
       ds_password: {
@@ -41,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       dh_create: {
         type: DataTypes.DATE,
         allowNull: false,
+        defaultValue: DataTypes.NOW,
       },
     },
     {

@@ -1,13 +1,22 @@
 const UserService = require("@root/services/UserService");
+const { StatusCodes } = require("http-status-codes");
+const UserEntity = require("@root/entity/UserEntity");
 
 class UserController {
   async create(request, response) {
+    const userEntity = UserEntity.fromJson(request.body);
+
     try {
       const userService = new UserService();
 
-      // TODO in-progress
-      userService.create();
-    } catch (error) {}
+      const userCreatedEntity = await userService.create(userEntity);
+
+      response.status(StatusCodes.CREATED).json(userCreatedEntity.toJson());
+    } catch (error) {
+      response
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ message: error.message });
+    }
   }
 }
 
