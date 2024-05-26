@@ -26,9 +26,18 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      name: DataTypes.STRING,
-      description: DataTypes.TEXT,
-      create_at: DataTypes.DATE,
+      ds_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      ds_description: {
+        type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      dh_create: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
     },
     {
       sequelize,

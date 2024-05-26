@@ -2,28 +2,31 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("roles", {
-      id_role: {
+    await queryInterface.createTable("tasks", {
+      id_task: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      ds_name: {
-        type: Sequelize.STRING,
+      ds_title: {
         allowNull: false,
+        type: Sequelize.STRING,
       },
       ds_description: {
-        type: Sequelize.TEXT,
         allowNull: false,
+        type: Sequelize.STRING,
       },
-      dh_create: {
-        type: Sequelize.DATE,
+      dh_created: {
         allowNull: false,
+        type: Sequelize.DATE,
+      },
+      dh_limit: {
+        type: Sequelize.DATE,
       },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("roles");
+    await queryInterface.dropTable("tasks");
   },
 };

@@ -48,7 +48,28 @@
 | id_user       | INTEGER | YES         |
 | id_permission | INTEGER | YES         |
 
-### Roles Flow
+### Task
+
+| Coluna         | Tipo      | Primary Key |
+| -------------- | --------- | ----------- |
+| id_task        | INTEGER   | YES         |
+| ds_title       | VARCHAR   | NO          |
+| ds_description | VARCHAR   | NO          |
+| dh_created     | TIMESTAMP | NO          |
+| dh_limit       | TIMESTAMP | NO          |
+
+### Task User
+
+| Coluna  | Tipo    | Primary Key |
+| ------- | ------- | ----------- |
+| id_task | INTEGER | YES         |
+| id_user | INTEGER | YES         |
+
+### Task Artefact
+
+- [IN-PROGRESS]
+
+## Roles Flow
 
 ```mermaid
     flowchart TD
@@ -58,6 +79,13 @@
         PermissionsRoles <--> |N/N| Roles[roles]
         Roles <--> |N/N| UserRoles[user_roles]
         UserRoles <--> |N/N| Users
+```
+
+## Task Flow
+
+```mermaid
+    flowchart TD
+        Task[task] <-->|N/N| TaskUsers[tasks_user]
 ```
 
 ## Environment variable

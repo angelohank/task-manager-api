@@ -9,14 +9,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
+      ds_name: {
         type: Sequelize.STRING,
+        allowNull: false,
       },
-      description: {
+      ds_description: {
         type: Sequelize.TEXT,
+        allowNull: false,
       },
-      create_at: {
+      dh_create: {
         type: Sequelize.DATE,
+        allowNull: false,
       },
     });
   },

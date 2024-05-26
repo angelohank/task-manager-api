@@ -1,10 +1,11 @@
+// TODO ajustar com base no .env, porem ocorre problema ao rodar npx sequelize-cli...
 module.exports = {
-  database: {
-    username: process.env.POSTGRES_USERNAME,
-    password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DATABASE,
-    host: process.env.POSTGRES_HOST,
-    port: process.env.POSTGRES_PORT,
+  development: {
+    username: "postgres",
+    password: "postgres",
+    database: "task-manager",
+    host: "127.0.0.1",
+    port: 5433,
     dialect: "postgres",
   },
 };

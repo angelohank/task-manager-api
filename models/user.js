@@ -16,6 +16,10 @@ module.exports = (sequelize, DataTypes) => {
         through: "user_permissions",
         foreignKey: "id_user",
       });
+      User.belongsToMany(models.Task, {
+        through: "task_users",
+        foreignKey: "id_user",
+      });
     }
   }
   User.init(
@@ -26,9 +30,18 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      username: DataTypes.STRING,
-      password: DataTypes.STRING,
-      create_at: DataTypes.DATE,
+      ds_username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      ds_password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      dh_create: {
+        type: DataTypes.DATE,
+        allowNull: false,
+      },
     },
     {
       sequelize,
