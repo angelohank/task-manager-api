@@ -7,7 +7,7 @@ const UserController = require("@root/controllers/UserController");
 
 router.post(
   "/create",
-  checkSchema(UserSchema.create),
+  checkSchema(UserSchema.login),
   new UserController().create
 );
 

@@ -1,6 +1,6 @@
 const UserService = require("@root/services/UserService");
-const { StatusCodes } = require("http-status-codes");
 const UserEntity = require("@root/entity/UserEntity");
+const { StatusCodes } = require("http-status-codes");
 
 class UserController {
   async create(request, response) {

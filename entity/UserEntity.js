@@ -1,9 +1,10 @@
 const { json } = require("sequelize");
 
 class UserEntity {
-  constructor(username, password) {
+  constructor(username, password, id = 0) {
     this.dsUsername = username;
     this.dsPassword = password;
+    this.idUser = id;
   }
 
   toModel() {
@@ -20,7 +21,7 @@ class UserEntity {
   }
 
   static fromModel(model) {
-    return new UserEntity(model.ds_username, model.ds_password);
+    return new UserEntity(model.ds_username, model.ds_password, model.id_user);
   }
 
   static fromJson(json) {

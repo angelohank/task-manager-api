@@ -2,7 +2,7 @@ const UserLimits = require("@root/helpers/limits/model/UserLimits");
 const MensageRestriction = require("@root/helpers/MessageRestriction");
 
 const schema = {
-  create: {
+  login: {
     username: {
       isString: true,
       notEmpty: UserLimits.username.isRequired,

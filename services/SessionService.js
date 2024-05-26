@@ -4,26 +4,31 @@ const { sign } = require("jsonwebtoken");
 const UserRepository = require("@root/repositories/UserRepository");
 
 class SessionService {
-  async execute(dsUsername, dsPassword) {
+  async authenticate(userRequestEntity) {
     const userRepository = new UserRepository();
 
-    const user = userRepository.findByDsUsername(dsUsername);
+    const userEntity = await userRepository.findByDsUsername(
+      userRequestEntity.dsUsername
+    );
 
-    if (!user) {
-      return new Error("User does not exists!");
+    if (!userEntity) {
+      throw new Error("User does not exists!");
     }
 
-    const isSamePassword = await compare(dsPassword, user.password);
+    const isSamePassword = await compare(
+      userRequestEntity.dsPassword,
+      userEntity.dsPassword
+    );
 
     if (!isSamePassword) {
-      return new Error("User or Password incorrect");
+      throw new Error("User or Password incorrect");
     }
 
     const token = sign({}, process.env.SECRET_JWT, {
-      subject: user.id,
+      subject: toString(userEntity.idUser),
     });
 
-    return { token };
+    return token;
   }
 }
 
