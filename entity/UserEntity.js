@@ -1,10 +1,12 @@
 const { json } = require("sequelize");
+const PermissionEntity = require("@root/entity/PermissionEntity");
 
 class UserEntity {
-  constructor(username, password, id = 0) {
+  constructor(username, password, id = 0, permissions = []) {
     this.dsUsername = username;
     this.dsPassword = password;
     this.idUser = id;
+    this.permissions = permissions;
   }
 
   toModel() {
@@ -21,7 +23,16 @@ class UserEntity {
   }
 
   static fromModel(model) {
-    return new UserEntity(model.ds_username, model.ds_password, model.id_user);
+    const permissionsEntity = model?.permissions?.map((permission) =>
+      PermissionEntity.fromModel(permission)
+    );
+
+    return new UserEntity(
+      model.ds_username,
+      model.ds_password,
+      model.id_user,
+      permissionsEntity
+    );
   }
 
   static fromJson(json) {

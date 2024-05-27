@@ -17,7 +17,7 @@ function isAuthenticated() {
       verify(token, process.env.SECRET_JWT);
 
       const { sub } = decode(token);
-      request.userId = sub.toString();
+      request.idUser = sub.toString();
 
       return next();
     } catch (err) {

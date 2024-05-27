@@ -28,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "PermissionRole",
       tableName: "permission_roles",
-      freezeTableName: true,
       timestamps: false,
     }
   );

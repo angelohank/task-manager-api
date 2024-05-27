@@ -10,16 +10,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       User.belongsToMany(models.Role, {
-        through: "user_roles",
+        through: models.UserRole,
         foreignKey: "id_user",
+        sourceKey: "id_user",
       });
       User.belongsToMany(models.Permission, {
-        through: "user_permissions",
+        through: models.UserPermission,
         foreignKey: "id_user",
+        sourceKey: "id_user",
+        as: "permissions",
       });
       User.belongsToMany(models.Task, {
-        through: "task_users",
+        through: models.TaskUser,
         foreignKey: "id_user",
+        sourceKey: "id_user",
       });
     }
   }
@@ -49,7 +53,6 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "User",
       tableName: "users",
-      freezeTableName: true,
       timestamps: false,
     }
   );

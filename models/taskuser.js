@@ -28,7 +28,6 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "TaskUser",
       tableName: "task_users",
-      freezeTableName: true,
       timestamps: false,
     }
   );

@@ -9,12 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Role.belongsToMany(models.User, {
-        through: "user_roles",
+        through: models.UserRole,
         foreignKey: "id_role",
+        sourceKey: "id_role",
       });
       Role.belongsToMany(models.Permission, {
-        through: "permission_roles",
+        through: models.PermissionRole,
         foreignKey: "id_role",
+        sourceKey: "id_role",
       });
     }
   }
@@ -44,7 +46,6 @@ module.exports = (sequelize, DataTypes) => {
       sequelize,
       modelName: "Role",
       tableName: "roles",
-      freezeTableName: true,
       timestamps: false,
     }
   );
