@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       Task.belongsToMany(models.User, {
         through: "task_users",
         foreignKey: "id_task",
+        as: "users",
       });
     }
   }

@@ -25,7 +25,7 @@ class SessionService {
     }
 
     const token = sign({}, process.env.SECRET_JWT, {
-      subject: toString(userEntity.idUser),
+      subject: userEntity.idUser.toString(),
     });
 
     return token;

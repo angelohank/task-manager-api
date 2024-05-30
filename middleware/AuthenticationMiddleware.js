@@ -20,10 +20,15 @@ function isAuthenticated() {
       request.idUser = sub.toString();
 
       return next();
-    } catch (err) {
-      return response.status(401).end();
+    } catch (error) {
+      console.error(error);
+      return response
+        .status(StatusCodes.UNAUTHORIZED)
+        .json({ message: "Authentication failed! check your access token." });
     }
   };
 }
 
-module.exports = isAuthenticated;
+module.exports = {
+  isAuthenticated,
+};

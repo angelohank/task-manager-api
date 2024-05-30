@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         through: models.UserRole,
         foreignKey: "id_user",
         sourceKey: "id_user",
+        as: "roles",
       });
       User.belongsToMany(models.Permission, {
         through: models.UserPermission,
@@ -24,6 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         through: models.TaskUser,
         foreignKey: "id_user",
         sourceKey: "id_user",
+        as: "tasks",
       });
     }
   }
