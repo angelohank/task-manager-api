@@ -57,6 +57,7 @@
 | ds_description | VARCHAR   | NO          |
 | dh_created     | TIMESTAMP | NO          |
 | dh_limit       | TIMESTAMP | NO          |
+| tp_status      | INTEGER   | NO          |
 
 ### Task User
 
@@ -67,7 +68,11 @@
 
 ### Task Artefact
 
-- [IN-PROGRESS]
+| Column      | Type    | Primary Key |
+| ----------- | ------- | ----------- |
+| id_task     | INTEGER | YES         |
+| id_artefact | INTEGER | YES         |
+| ds_url      | VARCHAR | NO          |
 
 ## Permissions and Roles
 
@@ -94,7 +99,7 @@
 | ----------- | ----- | ------- | ---- |
 | create_task | T     | T       | T    |
 | update_task | T     | T       | T    |
-| delete_task | T     | T       | T    |
+| delete_task | T     | T       | F    |
 | delete_user | T     | F       | F    |
 
 `Observation: Only admin and manager can delete tasks of another users.`

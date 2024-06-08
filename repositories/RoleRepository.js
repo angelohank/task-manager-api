@@ -10,8 +10,6 @@ class RoleRepository {
         return null;
       }
 
-      console.log(roleModel.toJSON());
-
       return RoleEntity.fromModel(roleModel.toJSON());
     } catch (error) {
       throw new Error(`Fail on search role [WHAT] ${error}`);

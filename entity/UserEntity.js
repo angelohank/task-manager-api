@@ -42,7 +42,7 @@ class UserEntity {
   }
 
   static fromJson(json) {
-    return new UserEntity(json.username, json.password);
+    return new UserEntity(json.username, json.password, json.id);
   }
 }
 

@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const TaskStatusEnum = require("@root/enums/TaskStatusEnum");
 module.exports = (sequelize, DataTypes) => {
   class Task extends Model {
     /**
@@ -35,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW,
+      },
+      tp_status: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: TaskStatusEnum.TODO,
       },
       dh_limit: {
         type: DataTypes.DATE,
