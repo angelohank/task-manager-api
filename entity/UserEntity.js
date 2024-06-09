@@ -6,13 +6,14 @@ class UserEntity {
   constructor(username, password, id = 0, permissions = [], roles = []) {
     this.dsUsername = username;
     this.dsPassword = password;
-    this.idUser = id;
+    this.idUser = id > 0 ? id : null;
     this.permissions = permissions;
     this.roles = roles;
   }
 
   toModel() {
     return {
+      id_user: this.idUser,
       ds_username: this.dsUsername,
       ds_password: this.dsPassword,
       roles: this.roles.map((role) => role.toModel()),
@@ -21,6 +22,7 @@ class UserEntity {
 
   toJson() {
     return {
+      id: this.idUser,
       username: this.dsUsername,
     };
   }

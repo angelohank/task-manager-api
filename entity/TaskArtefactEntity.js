@@ -27,7 +27,28 @@ class TaskArtefactEntity {
     return this.dsUrl;
   }
 
+  toJson() {
+    return {
+      id: this.idArtefact,
+      ds_url: this.dsUrl,
+    };
+  }
+
+  toModel() {
+    return {
+      ds_url: this.dsUrl,
+    };
+  }
+
   static fromJson(artefact) {
-    return new TaskArtefactEntity(artefact.dsUrl);
+    return new TaskArtefactEntity(artefact.ds_url);
+  }
+
+  static fromModel(artefact) {
+    var taskArtefactEntity = new TaskArtefactEntity(artefact.ds_url);
+    taskArtefactEntity.setIdArtefact(artefact.id_artefact);
+    return taskArtefactEntity;
   }
 }
+
+module.exports = TaskArtefactEntity;

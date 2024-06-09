@@ -2,7 +2,7 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("taskartefacts", {
+    await queryInterface.createTable("task_artefacts", {
       id_artefact: {
         allowNull: false,
         autoIncrement: true,
@@ -14,6 +14,10 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+        references: {
+          model: "tasks",
+          key: "id_task",
+        },
       },
       ds_url: {
         type: Sequelize.STRING,
@@ -22,6 +26,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("taskartefacts");
+    await queryInterface.dropTable("task_artefacts");
   },
 };

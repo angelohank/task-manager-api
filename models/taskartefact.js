@@ -1,26 +1,34 @@
 "use strict";
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class taskartefact extends Model {
+  class TaskArtefact extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      TaskArtefact.hasOne(models.Task, {
+        sourceKey: "id_task",
+        foreignKey: "id_task",
+        as: "tasks",
+      });
     }
   }
-  taskartefact.init(
+  TaskArtefact.init(
     {
       id_artefact: {
         type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
       },
       id_task: {
         type: DataTypes.INTEGER,
+        primaryKey: true,
       },
       ds_url: {
         type: DataTypes.STRING,
+        allowNull: false,
       },
     },
     {
@@ -30,5 +38,5 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     }
   );
-  return taskartefact;
+  return TaskArtefact;
 };

@@ -20,6 +20,7 @@ module.exports = {
       dh_create: {
         type: Sequelize.DATE,
         allowNull: false,
+        defaultValue: Sequelize.NOW,
       },
     });
   },

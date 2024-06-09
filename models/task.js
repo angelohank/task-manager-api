@@ -10,9 +10,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Task.belongsToMany(models.User, {
-        through: "task_users",
+        through: models.TaskUser,
+        sourceKey: "id_task",
         foreignKey: "id_task",
-        as: "users",
+        as: "members",
+      });
+      Task.hasMany(models.TaskArtefact, {
+        sourceKey: "id_task",
+        foreignKey: "id_task",
+        as: "artefacts",
       });
     }
   }

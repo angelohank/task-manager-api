@@ -6,11 +6,19 @@ class TaskEntity {
   constructor() {
     this.dsTitle = "";
     this.dsDescription = "";
-    this.dhCreated = "";
-    this.dhLimit = "";
+    this.dhCreated = null;
+    this.dhLimit = null;
     this.tpStatus = TaskStatusEnum.UNKNOW;
     this.members = [];
     this.artefacts = [];
+  }
+
+  setIdTask(idTask) {
+    this.idTask = idTask;
+  }
+
+  idTask() {
+    return this.idTask;
   }
 
   setDsTitle(dsTitle) {
@@ -65,16 +73,68 @@ class TaskEntity {
     return this.artefacts;
   }
 
+  toModel() {
+    return {
+      ds_title: this.dsTitle,
+      ds_description: this.dsDescription,
+      dh_created: this.dhCreated,
+      tp_status: this.tpStatus,
+      dh_limit: this.dhLimit,
+      artefacts: this.artefacts?.map((artefact) => {
+        return artefact.toModel();
+      }),
+      members: this.members?.map((member) => {
+        return member.toModel();
+      }),
+    };
+  }
+
+  toJson() {
+    return {
+      id: this.idTask,
+      description: this.dsDescription,
+      title: this.dsTitle,
+      dh_created: this.dhCreated,
+      dh_limit: this.dhLimit,
+      status: this.tpStatus,
+      members: this.members?.map((member) => {
+        return member.toJson();
+      }),
+      artefacts: this.artefacts?.map((artefact) => {
+        return artefact.toJson();
+      }),
+    };
+  }
+
+  static fromModel(task) {
+    var taskEntity = new TaskEntity();
+    taskEntity.setIdTask(task.id_task);
+    taskEntity.setDsTitle(task.ds_title);
+    taskEntity.setDsDescription(task.ds_description);
+    taskEntity.setDhCreated(task.dh_created);
+    taskEntity.setTpStatus(task.tp_status);
+    taskEntity.setDhLimit(task.dh_limit);
+    taskEntity.setArtefacts(
+      task.artefacts?.map((artefact) => {
+        return TaskArtefactEntity.fromModel(artefact);
+      })
+    );
+    taskEntity.setMembers(
+      task.members?.map((member) => {
+        return UserEntity.fromModel(member);
+      })
+    );
+    return taskEntity;
+  }
+
   static fromJson(task) {
     var taskEntity = new TaskEntity();
-
-    console.log(taskEntity);
 
     taskEntity.setDsTitle(task.title);
     taskEntity.setDsDescription(task.description);
     taskEntity.setTpStatus(TaskStatusEnum.fromString(task.status));
-    taskEntity.setDhCreated(task.dh_created ?? "");
-    taskEntity.setDhLimit(task.dh_limit ?? "");
+    taskEntity.setDhCreated(task.dh_created);
+    taskEntity.setDhLimit(task.dh_limit);
 
     taskEntity.setMembers(
       task.members?.map((member) => {
