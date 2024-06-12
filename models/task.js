@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "id_task",
         as: "artefacts",
       });
+      Task.hasOne(models.Status, {
+        sourceKey: "id_status",
+        foreignKey: "id_status",
+        as: "status",
+      });
     }
   }
   Task.init(
@@ -43,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         defaultValue: DataTypes.NOW,
       },
-      tp_status: {
+      id_status: {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: TaskStatusEnum.TODO,

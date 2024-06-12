@@ -22,7 +22,7 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
       },
-      tp_status: {
+      id_status: {
         type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 1,

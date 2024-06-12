@@ -17,7 +17,7 @@ class TaskRepository {
         return null;
       }
 
-      const usersModel = await taskCreateModel.addUser(
+      const usersModel = await taskCreateModel.addMembers(
         taskModel.members.map((member) => member.id_user)
       );
 

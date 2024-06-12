@@ -78,7 +78,7 @@ class TaskEntity {
       ds_title: this.dsTitle,
       ds_description: this.dsDescription,
       dh_created: this.dhCreated,
-      tp_status: this.tpStatus,
+      id_status: this.tpStatus,
       dh_limit: this.dhLimit,
       artefacts: this.artefacts?.map((artefact) => {
         return artefact.toModel();
@@ -112,7 +112,7 @@ class TaskEntity {
     taskEntity.setDsTitle(task.ds_title);
     taskEntity.setDsDescription(task.ds_description);
     taskEntity.setDhCreated(task.dh_created);
-    taskEntity.setTpStatus(task.tp_status);
+    taskEntity.setTpStatus(task.id_status);
     taskEntity.setDhLimit(task.dh_limit);
     taskEntity.setArtefacts(
       task.artefacts?.map((artefact) => {

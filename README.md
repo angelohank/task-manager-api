@@ -57,7 +57,7 @@
 | ds_description | VARCHAR   | NO          |
 | dh_created     | TIMESTAMP | NO          |
 | dh_limit       | TIMESTAMP | NO          |
-| tp_status      | INTEGER   | NO          |
+| id_status      | INTEGER   | NO          |
 
 ### Task User
 
