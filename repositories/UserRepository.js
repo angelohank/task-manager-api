@@ -1,5 +1,5 @@
 const UserEntity = require("@root/entity/UserEntity");
-const { User, UserPermission, Permission } = require("../models");
+const { User, Permission, Role } = require("@root/models");
 
 class UserRepository {
   async findOne(query) {
@@ -14,7 +14,7 @@ class UserRepository {
 
       return UserEntity.fromModel(userModel.toJSON());
     } catch (error) {
-      throw new Error(`Fail on search user by username [WHAT] ${error}`);
+      throw new Error(`Fail on search user [WHAT] ${error}`);
     }
   }
 
@@ -28,6 +28,19 @@ class UserRepository {
 
   async findByIdUser(idUser) {
     return await this.findOne({
+      where: {
+        id_user: idUser,
+      },
+    });
+  }
+
+  async findByIdUserInclueRoles(idUser) {
+    return await this.findOne({
+      include: {
+        model: Role,
+        as: "roles",
+        attributes: ["id_role", "ds_name", "dh_create", "ds_description"],
+      },
       where: {
         id_user: idUser,
       },
@@ -54,6 +67,10 @@ class UserRepository {
       if (userCreateModel === null) {
         return null;
       }
+
+      await userCreateModel.addRoles(
+        userModel.roles.map((role) => role.id_role)
+      );
 
       return UserEntity.fromModel(userCreateModel.toJSON());
     } catch (error) {

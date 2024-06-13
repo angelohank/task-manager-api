@@ -2,29 +2,30 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("users", {
-      id_user: {
+    await queryInterface.createTable("task_artefacts", {
+      id_artefact: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      ds_username: {
-        type: Sequelize.STRING(64),
+      id_task: {
         allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+        references: {
+          model: "tasks",
+          key: "id_task",
+        },
       },
-      ds_password: {
+      ds_url: {
         type: Sequelize.STRING,
         allowNull: false,
-      },
-      dh_create: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.NOW,
       },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable("task_artefacts");
   },
 };

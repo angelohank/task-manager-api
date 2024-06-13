@@ -2,72 +2,107 @@
 
 ### User Roles
 
-| Coluna  | Tipo    | Primary Key |
+| Column  | Type    | Primary Key |
 | ------- | ------- | ----------- |
 | id_user | INTEGER | YES         |
 | id_role | INTEGER | YES         |
 
 ### Users
 
-| Coluna    | Tipo      | Primary Key |
-| --------- | --------- | ----------- |
-| id_user   | INTEGER   | YES         |
-| username  | VARCHAR   | NO          |
-| password  | VARCHAR   | NO          |
-| create_at | TIMESTAMP | NO          |
+| Column      | Type      | Primary Key |
+| ----------- | --------- | ----------- |
+| id_user     | INTEGER   | YES         |
+| ds_username | VARCHAR   | NO          |
+| ds_password | VARCHAR   | NO          |
+| dh_create   | TIMESTAMP | NO          |
 
 ### Roles
 
-| Coluna      | Tipo      | Primary Key |
-| ----------- | --------- | ----------- |
-| id_role     | INTEGER   | YES         |
-| name        | VARCHAR   | NO          |
-| description | TEXT      | NO          |
-| create_at   | TIMESTAMP | NO          |
+| Column         | Type      | Primary Key |
+| -------------- | --------- | ----------- |
+| id_role        | INTEGER   | YES         |
+| ds_name        | VARCHAR   | NO          |
+| ds_description | TEXT      | NO          |
+| dh_create      | TIMESTAMP | NO          |
 
 ### Permissions Roles
 
-| Coluna        | Tipo    | Primary Key |
+| Column        | Type    | Primary Key |
 | ------------- | ------- | ----------- |
 | id_role       | INTEGER | YES         |
 | id_permission | INTEGER | YES         |
 
 ### Permissions
 
-| Coluna        | Tipo      | Primary Key |
-| ------------- | --------- | ----------- |
-| id_permission | INTEGER   | YES         |
-| name          | VARCHAR   | NO          |
-| description   | TEXT      | NO          |
-| create_at     | TIMESTAMP | NO          |
+| Column         | Type      | Primary Key |
+| -------------- | --------- | ----------- |
+| id_permission  | INTEGER   | YES         |
+| ds_name        | VARCHAR   | NO          |
+| ds_description | TEXT      | NO          |
+| dh_create      | TIMESTAMP | NO          |
 
 ### User Permissions
 
-| Coluna        | Tipo    | Primary Key |
+| Column        | Type    | Primary Key |
 | ------------- | ------- | ----------- |
 | id_user       | INTEGER | YES         |
 | id_permission | INTEGER | YES         |
 
 ### Task
 
-| Coluna         | Tipo      | Primary Key |
+| Column         | Type      | Primary Key |
 | -------------- | --------- | ----------- |
 | id_task        | INTEGER   | YES         |
 | ds_title       | VARCHAR   | NO          |
 | ds_description | VARCHAR   | NO          |
 | dh_created     | TIMESTAMP | NO          |
 | dh_limit       | TIMESTAMP | NO          |
+| id_status      | INTEGER   | NO          |
 
 ### Task User
 
-| Coluna  | Tipo    | Primary Key |
+| Column  | Type    | Primary Key |
 | ------- | ------- | ----------- |
 | id_task | INTEGER | YES         |
 | id_user | INTEGER | YES         |
 
 ### Task Artefact
 
-- [IN-PROGRESS]
+| Column      | Type    | Primary Key |
+| ----------- | ------- | ----------- |
+| id_task     | INTEGER | YES         |
+| id_artefact | INTEGER | YES         |
+| ds_url      | VARCHAR | NO          |
+
+## Permissions and Roles
+
+### Default Permissions
+
+| Permission  |
+| ----------- |
+| create_task |
+| update_task |
+| delete_task |
+| delete_user |
+
+### Default Roles
+
+| Role    |
+| ------- |
+| ADMIN   |
+| MANAGER |
+| USER    |
+
+### Default Permissions By Role
+
+| Permission  | ADMIN | MANAGER | USER |
+| ----------- | ----- | ------- | ---- |
+| create_task | T     | T       | T    |
+| update_task | T     | T       | T    |
+| delete_task | T     | T       | F    |
+| delete_user | T     | F       | F    |
+
+`Observation: Only admin and manager can delete tasks of another users.`
 
 ## Roles Flow
 
@@ -120,3 +155,8 @@ Create .env file at the root of the project, these settings are inside it.
 - <b>POSTGRES_PORT</b>
 
   Example: `POSTGRES_PORT=5432` <br>
+
+- <b>SECRET_JWT</b>
+
+  Example: `SECRET_JWT=cGFsbWVpcmFzbmFvdGVtbXVuZGlhbA==` <br>
+  Description: value used to sign the user token

@@ -8,7 +8,9 @@ const { checkSchema } = require("@root/middleware/RequestValidator");
 router.post(
   "/authenticate",
   checkSchema(UserSchema.login),
-  new SessionController().authenticate
+  (request, response) => {
+    new SessionController().authenticate(request, response);
+  }
 );
 
 module.exports = router;

@@ -15,11 +15,17 @@ module.exports = {
       },
       ds_description: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.STRING, // TODO change for TEXT, limit is 255 how STRING
       },
       dh_created: {
         allowNull: false,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW,
+      },
+      id_status: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 1,
       },
       dh_limit: {
         type: Sequelize.DATE,

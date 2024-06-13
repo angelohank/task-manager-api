@@ -1,5 +1,6 @@
 "use strict";
 const { Model } = require("sequelize");
+const TaskStatusEnum = require("@root/enums/TaskStatusEnum");
 module.exports = (sequelize, DataTypes) => {
   class Task extends Model {
     /**
@@ -9,8 +10,20 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Task.belongsToMany(models.User, {
-        through: "task_users",
+        through: models.TaskUser,
+        sourceKey: "id_task",
         foreignKey: "id_task",
+        as: "members",
+      });
+      Task.hasMany(models.TaskArtefact, {
+        sourceKey: "id_task",
+        foreignKey: "id_task",
+        as: "artefacts",
+      });
+      Task.hasOne(models.Status, {
+        sourceKey: "id_status",
+        foreignKey: "id_status",
+        as: "status",
       });
     }
   }
@@ -34,6 +47,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.DATE,
         allowNull: false,
         defaultValue: DataTypes.NOW,
+      },
+      id_status: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: TaskStatusEnum.TODO,
       },
       dh_limit: {
         type: DataTypes.DATE,
