@@ -18,6 +18,7 @@ module.exports = {
           model: "tasks",
           key: "id_task",
         },
+        onDelete: "cascade",
       },
       ds_url: {
         type: Sequelize.STRING,

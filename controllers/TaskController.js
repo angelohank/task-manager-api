@@ -4,7 +4,17 @@ const TaskService = require("@root/services/TaskService");
 
 class TaskController {
   async create(request, response) {
-    const taskEntity = TaskEntity.fromJson(request.body);
+    const { title, description, priority, dh_limit, memebers, artefacts } =
+      request.body;
+
+    const taskEntity = TaskEntity.fromJson({
+      title,
+      description,
+      priority,
+      dh_limit: dh_limit !== "" ? dh_limit : null,
+      memebers,
+      artefacts,
+    });
 
     try {
       const taskService = new TaskService();
@@ -13,13 +23,30 @@ class TaskController {
 
       response.status(StatusCodes.CREATED).json(taskCreatedEntity.toJson());
     } catch (error) {
+      console.error(error);
       response
         .status(StatusCodes.INTERNAL_SERVER_ERROR)
         .json({ message: error.message });
     }
   }
 
-  async update(request, response) {}
+  async update(request, response) {
+    const taskEntity = TaskEntity.fromJson(request.body);
+
+    try {
+      const taskService = new TaskService();
+
+      await taskService.update(taskEntity);
+
+      response.status(StatusCodes.CREATED).json({
+        message: `Task ${taskEntity.idTask} has updated!`,
+      });
+    } catch (error) {
+      response
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ message: error.message });
+    }
+  }
 
   async delete(request, response) {
     const idTask = request.params.id;
@@ -27,7 +54,7 @@ class TaskController {
     try {
       const taskService = new TaskService();
 
-      const taskCreatedEntity = await taskService.delete(idTask);
+      await taskService.delete(idTask);
 
       response.status(StatusCodes.CREATED).json({
         message: `Task ${idTask} has deleted!`,
@@ -67,6 +94,25 @@ class TaskController {
 
       response.status(StatusCodes.CREATED).json({
         tasks: tasksJson,
+      });
+    } catch (error) {
+      response
+        .status(StatusCodes.INTERNAL_SERVER_ERROR)
+        .json({ message: error.message });
+    }
+  }
+
+  async updateStatus(request, response) {
+    const idTask = request.query.id;
+    const idStatus = request.query.idStatus;
+
+    try {
+      const taskService = new TaskService();
+
+      await taskService.updateStatus(idTask, idStatus);
+
+      response.status(StatusCodes.CREATED).json({
+        message: `Task ${idTask} has updated!`,
       });
     } catch (error) {
       response

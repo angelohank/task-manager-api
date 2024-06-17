@@ -45,6 +45,14 @@ class UserService {
 
     return userCreatedEntity;
   }
+
+  async findAllByDsUsername(dsUsername) {
+    const userRepository = new UserRepository();
+
+    const usersEntity = await userRepository.findAllByDsUsername(dsUsername);
+
+    return usersEntity;
+  }
 }
 
 module.exports = UserService;

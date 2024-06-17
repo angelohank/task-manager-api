@@ -6,8 +6,6 @@ class StatusRepository {
     try {
       const statusesModel = await Status.findAll(query);
 
-      console.log(statusesModel);
-
       const statusesEntity = statusesModel?.map((statusModel) => {
         return StatusEntity.fromModel(statusModel.toJSON());
       });

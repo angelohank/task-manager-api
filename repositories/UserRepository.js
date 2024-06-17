@@ -1,5 +1,7 @@
 const UserEntity = require("@root/entity/UserEntity");
 const { User, Permission, Role } = require("@root/models");
+const FilterSequelizeHelper = require("@root/helpers/sequelize/FilterSequelizeHelper");
+const sequelize = require("sequelize");
 
 class UserRepository {
   async findOne(query) {
@@ -75,6 +77,33 @@ class UserRepository {
       return UserEntity.fromModel(userCreateModel.toJSON());
     } catch (error) {
       throw new Error(`Fail on create user [WHAT] ${error}`);
+    }
+  }
+
+  async findAllByDsUsername(dsUsername) {
+    console.log(dsUsername);
+    try {
+      const usersModel = await User.findAll({
+        attributes: ["id_user", "ds_username"],
+        where: {
+          [sequelize.Op.and]: FilterSequelizeHelper.likeLowerCase(
+            dsUsername,
+            "ds_username"
+          ),
+        },
+      });
+
+      if (!usersModel) {
+        return null;
+      }
+
+      const usersEntity = usersModel?.map((user) => {
+        return UserEntity.fromModel(user);
+      });
+
+      return usersEntity;
+    } catch (error) {
+      throw new Error(`Fail on search by user [WHAT] ${error}`);
     }
   }
 }

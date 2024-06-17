@@ -43,4 +43,11 @@ router.get(
   new TaskController().findOne
 );
 
+router.put(
+  "/status",
+  AuthenticationMiddleware.isAuthenticated(),
+  checkSchema(TaskSchema.put),
+  new TaskController().updateStatus
+);
+
 module.exports = router;

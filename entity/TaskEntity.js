@@ -1,9 +1,11 @@
 const UserEntity = require("@root/entity/UserEntity");
 const TaskArtefactEntity = require("@root/entity/TaskArtefactEntity");
 const TaskStatusEnum = require("@root/enums/TaskStatusEnum");
+const TypePriorityEnum = require("@root/enums/TypePriorityEnum");
 
 class TaskEntity {
   constructor() {
+    this.idTask = null;
     this.dsTitle = "";
     this.dsDescription = "";
     this.dhCreated = null;
@@ -11,6 +13,7 @@ class TaskEntity {
     this.tpStatus = TaskStatusEnum.UNKNOW;
     this.members = [];
     this.artefacts = [];
+    this.tpPriority = TypePriorityEnum.UNKNOW;
   }
 
   setIdTask(idTask) {
@@ -73,13 +76,23 @@ class TaskEntity {
     return this.artefacts;
   }
 
+  setTpPriority(tpPriority) {
+    this.tpPriority = tpPriority;
+  }
+
+  tpPriority() {
+    return this.tpPriority;
+  }
+
   toModel() {
     return {
+      id_task: this.idTask,
       ds_title: this.dsTitle,
       ds_description: this.dsDescription,
       dh_created: this.dhCreated,
       id_status: this.tpStatus,
       dh_limit: this.dhLimit,
+      tp_priority: this.tpPriority,
       artefacts: this.artefacts?.map((artefact) => {
         return artefact.toModel();
       }),
@@ -97,6 +110,7 @@ class TaskEntity {
       dh_created: this.dhCreated,
       dh_limit: this.dhLimit,
       status: this.tpStatus,
+      priority: TypePriorityEnum.toString(this.tpPriority),
       members: this.members?.map((member) => {
         return member.toJson();
       }),
@@ -114,6 +128,7 @@ class TaskEntity {
     taskEntity.setDhCreated(task.dh_created);
     taskEntity.setTpStatus(task.id_status);
     taskEntity.setDhLimit(task.dh_limit);
+    taskEntity.setTpPriority(task.tp_priority);
     taskEntity.setArtefacts(
       task.artefacts?.map((artefact) => {
         return TaskArtefactEntity.fromModel(artefact);
@@ -130,11 +145,13 @@ class TaskEntity {
   static fromJson(task) {
     var taskEntity = new TaskEntity();
 
+    taskEntity.setIdTask(task.id);
     taskEntity.setDsTitle(task.title);
     taskEntity.setDsDescription(task.description);
     taskEntity.setTpStatus(TaskStatusEnum.fromString(task.status));
     taskEntity.setDhCreated(task.dh_created);
     taskEntity.setDhLimit(task.dh_limit);
+    taskEntity.setTpPriority(TypePriorityEnum.fromString(task.priority));
 
     taskEntity.setMembers(
       task.members?.map((member) => {

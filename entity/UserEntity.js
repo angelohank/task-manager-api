@@ -1,4 +1,3 @@
-const { json } = require("sequelize");
 const PermissionEntity = require("@root/entity/PermissionEntity");
 const RoleEntity = require("./RoleEntity");
 
