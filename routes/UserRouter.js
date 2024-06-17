@@ -14,4 +14,10 @@ router.post(
   new UserController().create
 );
 
+router.get(
+  "/",
+  AuthenticationMiddleware.isAuthenticated(),
+  new UserController().findAllByDsUsername
+);
+
 module.exports = router;
