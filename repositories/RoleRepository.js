@@ -23,6 +23,22 @@ class RoleRepository {
       },
     });
   }
+
+  async findAll() {
+    try {
+      const rolesModel = await Role.findAll();
+
+      if (!rolesModel) {
+        return null;
+      }
+
+      return rolesModel.map((role) => {
+        return RoleEntity.fromModel(role);
+      });
+    } catch (error) {
+      throw new Error(`Fail on get roles [WHAT] ${error}`);
+    }
+  }
 }
 
 module.exports = RoleRepository;

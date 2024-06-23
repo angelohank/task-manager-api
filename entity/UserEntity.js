@@ -23,6 +23,9 @@ class UserEntity {
     return {
       id: this.idUser,
       username: this.dsUsername,
+      roles: this.roles.map((roleEntity) => {
+        return roleEntity.toJson();
+      }),
     };
   }
 
@@ -43,7 +46,15 @@ class UserEntity {
   }
 
   static fromJson(json) {
-    return new UserEntity(json.username, json.password, json.id);
+    return new UserEntity(
+      json.username,
+      json.password,
+      json.id,
+      [],
+      json.roles?.map((roleJson) => {
+        return RoleEntity.fromJson(roleJson);
+      }) ?? []
+    );
   }
 }
 

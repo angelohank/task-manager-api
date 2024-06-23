@@ -53,6 +53,28 @@ class UserService {
 
     return usersEntity;
   }
+
+  async findAll() {
+    const userRepository = new UserRepository();
+
+    const usersEntity = await userRepository.findAll();
+
+    return usersEntity;
+  }
+
+  async deleteById(idUser) {
+    const userRepository = new UserRepository();
+
+    const usersEntity = await userRepository.deleteById(idUser);
+
+    return usersEntity;
+  }
+
+  async update(userEntity) {
+    const userRepository = new UserRepository();
+
+    await userRepository.update(userEntity.toModel());
+  }
 }
 
 module.exports = UserService;
