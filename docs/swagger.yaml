@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: API para gerenciamento de tarefas
 paths:
-  /tasks:
+  /task:
     get:
       summary: Lista todas as tarefas
       responses:
@@ -27,7 +27,7 @@ paths:
       responses:
         '201':
           description: Tarefa criada com sucesso
-  /tasks/{id}:
+  /task/{id}:
     get:
       summary: Obtém uma tarefa pelo ID
       parameters:
@@ -80,6 +80,73 @@ paths:
           description: Tarefa deletada com sucesso
         '404':
           description: Tarefa não encontrada
+  /user/create:
+    post:
+      summary: Cadastra novo usuário
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '500':
+          description: Falha interna
+  /session/authenticate:
+    post:
+      summary: Autentica se a sessão está válida
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Session'
+      responses:
+        '200':
+          description: Sucesso ao autenticar sessão
+        '500':
+          description: Falha interna
+  /status/:
+    get:
+      summary: Busca todas as autenticações feitas
+      responses:
+        '201':
+          description: Autenticações válidas
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Authentication'
+        '500':
+          description: Falha interna
+  /status/task:
+    get:
+      summary: Busca as autenticações para uma determinada tarefa
+      parameters:
+        - in: query
+          name: taskId
+          schema:
+            type: integer
+          required: true
+          description: ID da tarefa
+      responses:
+        '201':
+          description: Autenticações válidas para a tarefa
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Authentication'
+        '500':
+          description: Falha interna
 components:
   schemas:
     Task:
@@ -97,5 +164,43 @@ components:
           type: string
           format: date-time
         updatedAt:
+          type: string
+          format: date-time
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        password:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    Session:
+      type: object
+      properties:
+        sessionId:
+          type: string
+        userId:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+    Authentication:
+      type: object
+      properties:
+        sessionId:
+          type: string
+        taskId:
+          type: integer
+        authenticatedAt:
           type: string
           format: date-time
