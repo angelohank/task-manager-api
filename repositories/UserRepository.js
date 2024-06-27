@@ -2,7 +2,6 @@ const UserEntity = require("@root/entity/UserEntity");
 const { User, Permission, Role } = require("@root/models");
 const FilterSequelizeHelper = require("@root/helpers/sequelize/FilterSequelizeHelper");
 const sequelize = require("sequelize");
-const { password } = require("@root/helpers/limits/model/UserLimits");
 
 class UserRepository {
   async findOne(query) {
