@@ -1,5 +1,5 @@
 class RoleEntity {
-  constructor(idRole, dsName, dsDescription, dhCreate) {
+  constructor(idRole, dsName, dsDescription = "", dhCreate = null) {
     this.idRole = idRole;
     this.dsName = dsName;
     this.dsDescription = dsDescription;
@@ -13,6 +13,19 @@ class RoleEntity {
       ds_description: this.dsDescription,
       dh_create: this.dhCreate,
     };
+  }
+
+  toJson() {
+    return {
+      id: this.idRole,
+      type: this.dsName,
+      description: this.dsDescription,
+      dh_create: this.dhCreate,
+    };
+  }
+
+  static fromJson(roleJson) {
+    return new RoleEntity(roleJson.id, roleJson.dsName);
   }
 
   static fromModel(role) {

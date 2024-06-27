@@ -33,7 +33,40 @@ class TaskRepository {
     }
   }
 
-  async update() {}
+  async update(taskModel) {
+    try {
+      const rowsUpdated = await Task.update(
+        {
+          ds_title: taskModel.ds_title,
+          ds_description: taskModel.ds_description,
+          dh_limit: taskModel.dh_limit,
+          tp_priority: taskModel.tp_priority,
+        },
+        {
+          where: {
+            id_task: taskModel.id_task,
+          },
+        }
+      );
+
+      // TODO adjust errors
+      if (!rowsUpdated || rowsUpdated[0] === 0) {
+        throw new Error(`Fail on update task [WHAT] ${error}`);
+      }
+
+      const taskUpdated = await Task.findOne({
+        where: {
+          id_task: taskModel.id_task,
+        },
+      });
+
+      await taskUpdated.setMembers(
+        taskModel.members.map((member) => member.id_user)
+      );
+    } catch (error) {
+      throw new Error(`Fail on update task [WHAT] ${error}`);
+    }
+  }
 
   async findAll() {
     try {
@@ -95,6 +128,23 @@ class TaskRepository {
       });
     } catch (error) {
       throw new Error(`Fail on delete task [WHAT] ${error}`);
+    }
+  }
+
+  async updateStatus(idTask, idStatus) {
+    try {
+      await Task.update(
+        {
+          id_status: idStatus,
+        },
+        {
+          where: {
+            id_task: idTask,
+          },
+        }
+      );
+    } catch (error) {
+      throw new Error(`Fail on update status of task [WHAT] ${error}`);
     }
   }
 }

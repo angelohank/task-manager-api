@@ -8,6 +8,10 @@ class RoleService {
   async findRoleByName(dsName) {
     return await this.roleRepository.findRoleByName(dsName);
   }
+
+  async findAll() {
+    return await this.roleRepository.findAll();
+  }
 }
 
 module.exports = RoleService;

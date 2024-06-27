@@ -11,6 +11,7 @@ module.exports = {
           model: "tasks",
           key: "id_task",
         },
+        onDelete: "cascade",
       },
       id_user: {
         allowNull: false,
@@ -20,6 +21,7 @@ module.exports = {
           model: "users",
           key: "id_user",
         },
+        onDelete: "cascade",
       },
     });
   },

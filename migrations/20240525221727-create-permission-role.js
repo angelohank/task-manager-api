@@ -11,6 +11,7 @@ module.exports = {
           model: "roles",
           key: "id_role",
         },
+        onDelete: "cascade",
       },
       id_permission: {
         allowNull: false,
@@ -20,6 +21,7 @@ module.exports = {
           model: "permissions",
           key: "id_permission",
         },
+        onDelete: "cascade",
       },
     });
   },
