@@ -2,6 +2,7 @@ const UserEntity = require("@root/entity/UserEntity");
 const { User, Permission, Role } = require("@root/models");
 const FilterSequelizeHelper = require("@root/helpers/sequelize/FilterSequelizeHelper");
 const sequelize = require("sequelize");
+const { password } = require("@root/helpers/limits/model/UserLimits");
 
 class UserRepository {
   async findOne(query) {
@@ -145,16 +146,23 @@ class UserRepository {
   }
 
   async update(userModel) {
-    console.log(userModel);
+    var updateFields = {
+      ds_username: userModel.ds_username,
+    };
+
+    if (userModel.ds_password.trim() !== "") {
+      updateFields = { ...updateFields, ds_password: userModel.ds_password };
+    }
+
     try {
-      const rowsUpdated = await User.update(userModel, {
+      const rowsUpdated = await User.update(updateFields, {
         where: {
           id_user: userModel.id_user,
         },
       });
 
       if (!rowsUpdated || rowsUpdated[0] === 0) {
-        throw new Error(`Fail on update user [WHAT] ${error}`);
+        throw new Error(`Fail on update user`);
       }
 
       console.log(userModel);

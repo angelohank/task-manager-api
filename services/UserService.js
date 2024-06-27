@@ -26,8 +26,7 @@ class UserService {
       throw new Error("Default permission don't found");
     }
 
-    const nrSaltRounds = 8;
-    const dsPasswordHash = await hash(userEntity.dsPassword, nrSaltRounds);
+    const dsPasswordHash = await this.passwordToHash(userEntity.dsPassword);
 
     const userCreatedEntity = await userRepository.create(
       new UserEntity(
@@ -70,10 +69,22 @@ class UserService {
     return usersEntity;
   }
 
+  async passwordToHash(dsPassword) {
+    const nrSaltRounds = 8;
+    return await hash(dsPassword, nrSaltRounds);
+  }
+
   async update(userEntity) {
     const userRepository = new UserRepository();
 
-    await userRepository.update(userEntity.toModel());
+    const dsPassword = await this.passwordToHash(userEntity.dsPassword);
+
+    const userModel = {
+      ...userEntity.toModel(),
+      ds_password: dsPassword,
+    };
+
+    await userRepository.update(userModel);
   }
 }
 

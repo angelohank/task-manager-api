@@ -32,7 +32,7 @@ router.delete(
 router.put(
   "/:id",
   AuthenticationMiddleware.isAuthenticated(),
-  // PermissionMiddleware.needRole([RoleTypeEnum.ADMIN]),
+  PermissionMiddleware.needRole([RoleTypeEnum.ADMIN]),
   new UserController().update
 );
 
